@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Strict//SP"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+
+  <title>Hello, World</title>
+
+  <script src="https://unpkg.com/mathjs@9.4.4/lib/browser/math.js"></script>
+  <script>
+MathJax = {
+  loader: {load: ['input/asciimath', 'output/chtml', 'ui/menu']},
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+</script>
+
+</head>
+<body>
+  <h1>Genera Ejercicios de Práctica</h1>
+
+
+<form>
+<b> Selecciona tu nivel </b>
+<select id = "myList" onchange = "ChooseLevel()" >
+<option> ---Nivel--- </option>
+<option> Básico/Beginner </option>
+<option> Intermedio/Intermediate </option>
+<option> Avanzado/Advanced </option>
+</select>
+</form>
+<br><br>
+
+<form>
+<b> Cantidad de preguntas </b>
+<select id = "qEjer" onchange = "ChooseNEjer()" >
+<option> ---Cantidad de preguntas--- </option>
+<option> 5 </option>
+<option> 10 </option>
+<option> 15 </option>
+<option> 20 </option>
+</select>
+</form>
+<br><br>
+
+<form>
+  <b>Tipo: </b>
+    <label>
+      <input type="radio" name="answer" value="1" checked />
+      `a*b*c...`
+    </label>
+    <label>
+      <input type="radio" name="answer" value="2" />
+      `(a*c*...)/(b*d*...)`
+    </label>
+    <label>
+      <input type="radio" name="answer" value="3" />
+      Combinado
+    </label>
+</form>
+<br>
+
+<form>
+<b>Incluye: </b><br>
+<input type="checkbox" name="incluye" value="pi">`pi`<br>
+<input type="checkbox" name="incluye" value="sqr">`x^2,sqrt(x)`<br>
+<input type="checkbox" name="incluye" value="cub">`x^3,root(3)(x)`<br>
+<input type="checkbox" name="incluye" value="pow">`x^y`<br>
+<br><br>
+</form>
+
+<button onclick="isChecked();MyRand()">Genera</button>
+
+<p id="demo"></p>
+<p id="OPT"></p>
+
+<script>
+const nvl = math.matrix([[1,'Básico/Beginner', 0, 1],[2,'Intermedio/Intermediate',-1,-2],[3,'Avanzado/Advanced',-2,3]]);
+const nEjer = math.matrix([[5],[10],[15],[20]]);
+
+function ChooseLevel() {
+var mylist = document.getElementById("myList");
+//document.getElementById("NVL").innerHTML = nvl.get([mylist.selectedIndex-1,1]);
+return nvl.get([mylist.selectedIndex-1,0]);
+}
+
+function ChooseNEjer() {
+var mylist = document.getElementById("qEjer");
+//document.getElementById("favourite").value = qEjer.options[qEjer.selectedIndex].value;
+//document.getElementById("QEJER").innerHTML = nEjer.get([qEjer.selectedIndex-1,0]);
+return nEjer.get([qEjer.selectedIndex-1,0]);
+}
+
+
+function SignificantFigures(p){
+  var num = numero(math.randomInt(1,1999));
+  var n = math.floor(math.log10(math.abs(num)))+1-p;
+  var sf = math.pow(10,n)*math.round(num/math.pow(10,n),0);
+  sf = math.format(sf,3);
+  //document.getElementById("demo").innerHTML = sf;
+}
+
+function numero(num){
+ return num*math.pow(10,math.randomInt(-8,5));
+}
+
+function MyRand(){
+  mrnd = math.format(math.randomInt(1,1999)*math.pow(10,math.randomInt(-6,6)),4);
+  document.getElementById("demo").innerHTML= mrnd;
+}
+
+function isChecked() {
+  var incl = document.forms[3];
+  var txt = "";
+  var i;
+  for (i = 0; i < incl.length; i++) {
+    if (incl[i].checked) {
+      txt = txt + incl[i].value + " ";
+    }
+  }
+  return document.getElementById("OPT").innerHTML = txt;
+}
+
+</script>
+
+</body>
+</html>
